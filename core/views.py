@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 def home_page(request):
   return render(request, 'index.html')
-
+def items_page(request):
+  return render(request, 'items.html')
 
 def about_page(request):
   return render(request, 'about.html')
@@ -19,3 +20,6 @@ def team_page(request):
 
 def testimonial_page(request):
   return render(request,'testimonial.html')
+
+def booking_page(request):
+  return render(request, 'booking.html')
