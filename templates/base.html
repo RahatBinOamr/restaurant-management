@@ -80,10 +80,10 @@
                 {% for message in messages %}
                     Toastify({
                         text: "{{ message }}",
-                        duration: 2000,
+                        duration: 3000,
                         close: true,
                         gravity: "top", // 'top' or 'bottom'
-                        position: 'right', // 'left', 'right', 'center'
+                        position: 'center', // 'left', 'right', 'center'
                     }).showToast();
                 {% endfor %}
             {% endif %}

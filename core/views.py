@@ -2,6 +2,12 @@ from django.shortcuts import render
 from .models import Contact,Reservation
 from django.contrib import messages
 from datetime import datetime
+
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 # Create your views here.
 def home_page(request):
   return render(request, 'index.html')
@@ -45,6 +51,7 @@ def booking_page(request):
             messages.error(request, "Invalid date and time format.")
             return render(request, 'booking.html')
 
+        # Create the reservation
         Reservation.objects.create(
             name=name,
             email=email,
@@ -52,5 +59,23 @@ def booking_page(request):
             people=people,
             datetime=dateTime
         )
-        messages.success(request, f"Your table booking was successfully on {dateTime} for {people} person(s).")
+
+        # Send a confirmation email
+        subject = 'Booking Confirmation'
+        message = f"Dear {name},\n\nYour table booking was successfully made for {dateTime.strftime('%B %d, %Y at %I:%M %p')} for {people} person(s)."
+
+        smtp_server = smtplib.SMTP('smtp-relay.brevo.com', 587)
+        smtp_server.starttls()
+        smtp_server.login("6e87d6002@smtp-brevo.com", "j8Wadh0ZvX7CR9kx")
+
+        msg = MIMEMultipart()
+        msg['From'] = "rahatbinomar@gmail.com"
+        msg['To'] = email 
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message, 'html'))
+        smtp_server.quit()
+
+        # Add a success message
+        messages.success(request, f"Your table booking was successfully made for {dateTime.strftime('%B %d, %Y at %I:%M %p')} for {people} person(s).")
+        
     return render(request, 'booking.html')
