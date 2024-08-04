@@ -1,5 +1,5 @@
 from django.db import models
-
+from tinymce.models import HTMLField  
 # Create your models here.
 class Contact(models.Model):
   name = models.CharField(max_length=200)
@@ -32,11 +32,12 @@ PERIOD_CHOICES =(
 )
 class Item(models.Model):
   name = models.CharField(max_length=300)
-  description = models.TextField()
+  description = HTMLField() 
   price = models.DecimalField(max_digits=5,decimal_places=2)
   image = models.ImageField(upload_to='items')
   period = models.CharField(max_length=10,choices=PERIOD_CHOICES)
   created = models.DateTimeField(auto_now_add=True)
+
 
   def __str__(self):
     return f"{self.name}"
