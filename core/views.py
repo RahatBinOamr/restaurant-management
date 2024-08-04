@@ -1,8 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+from core.forms import SubscribeForm
 from .models import Contact,Reservation
 from django.contrib import messages
 from datetime import datetime
-
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -79,3 +81,26 @@ def booking_page(request):
         messages.success(request, f"Your table booking was successfully made for {dateTime.strftime('%B %d, %Y at %I:%M %p')} for {people} person(s).")
         
     return render(request, 'booking.html')
+
+
+def subscription_page(request):
+    if request.method == 'POST':
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            subscription = form.save()
+            subject = 'Subscription Successful'
+            message = f'Thank you {subscription.email} for subscribing to restaurant site!'
+            smtp_server = smtplib.SMTP('smtp-relay.brevo.com', 587)
+            smtp_server.starttls()
+            smtp_server.login("6e87d6002@smtp-brevo.com", "j8Wadh0ZvX7CR9kx")
+
+            msg = MIMEMultipart()
+            msg['From'] = "rahatbinomar@gmail.com"
+            msg['To'] = subscription.email 
+            msg['Subject'] = subject
+            msg.attach(MIMEText(message, 'html'))
+            smtp_server.quit()
+            messages.success(request, 'You are subscribed successfully!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            
+    
