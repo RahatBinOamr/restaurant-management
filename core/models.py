@@ -48,4 +48,15 @@ class Subscribe(models.Model):
 
     def __str__(self):
         return self.email
+    
 
+class Team(models.Model):
+  name = models.CharField(max_length=200)
+  image = models.ImageField(upload_to='team_images/')
+  designation = models.CharField(max_length=200)
+  facebook = models.URLField(null=True, blank=True)
+  instagram = models.URLField(null=True, blank=True)
+  twitter = models.URLField(null=True, blank=True)
+
+  def __str__(self):
+    return f"{self.name}-({self.designation})"
