@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-menu
+dinner-menu
 {% endblock title %}
 {% block content %}
  <!-- Navbar & Hero Start -->
@@ -69,7 +69,7 @@ menu
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="d-flex align-items-center text-start mx-3 pb-3 active"  href="{% url 'lunch' %}">
+                            <a class="d-flex align-items-center text-start mx-3 pb-3 "  href="{% url 'lunch' %}">
                                 <i class="fa fa-hamburger fa-2x text-primary"></i>
                                 <div class="ps-3">
                                     <small class="text-body">Special</small>
@@ -78,7 +78,7 @@ menu
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="d-flex align-items-center text-start mx-3 me-0 pb-3 "  href="{% url 'dinner' %}">
+                            <a class="d-flex align-items-center text-start mx-3 me-0 pb-3 active"  href="{% url 'dinner' %}">
                                 <i class="fa fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
                                     <small class="text-body">Lovely</small>
