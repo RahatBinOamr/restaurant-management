@@ -10,11 +10,47 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from .models import Item
+
 # Create your views here.
 def home_page(request):
-  return render(request, 'index.html')
+  items = Item.objects.all().order_by('?')[:12]
+
+  context ={
+     'items': items
+  }
+  return render(request, 'index.html',context)
 def items_page(request):
-  return render(request, 'items.html')
+  items = Item.objects.all().order_by('?')[:12]
+
+  context ={
+     'items': items
+  }
+  return render(request, 'items.html',context)
+
+
+def lunch_item(request):
+  lunch = Item.objects.filter(period='LUNCH')
+  context ={
+    'items':lunch
+  }
+  return render(request, 'lunch.html', context)
+
+def dinner_item(request):
+  dinner = Item.objects.filter(period='DINNER')
+  context ={
+    'items':dinner
+  }
+  return render(request, 'dinner.html', context)
+
+def break_fist_item(request):
+  break_first = Item.objects.filter(period='BREAK_FIST')
+  context ={
+    'items':break_first
+  }
+  return render(request, 'break_fist.html', context)
+
+
 
 def about_page(request):
   return render(request, 'about.html')
