@@ -1,5 +1,6 @@
 from django.db import models
 from tinymce.models import HTMLField  
+from autoslug import AutoSlugField
 # Create your models here.
 PERIOD_CHOICES =(
   ('BREAK_FIST','BRAKE_FIST'),
@@ -12,7 +13,9 @@ class Item(models.Model):
   price = models.DecimalField(max_digits=5,decimal_places=2)
   image = models.ImageField(upload_to='items')
   period = models.CharField(max_length=10,choices=PERIOD_CHOICES)
+  slug = AutoSlugField(populate_from='name')
   created = models.DateTimeField(auto_now_add=True)
+
 
 
   def __str__(self):

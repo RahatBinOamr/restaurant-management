@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}
+{{item.slug}}
+{% endblock title %}
+{% block script %}
+<script src="js/main.js"></script>
+{% endblock script %}
+{% block content %}
+<!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="{% url 'home' %}" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                        <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'service' %}" class="nav-item nav-link">Service</a>
+                        <a href="{% url 'items' %}" class="nav-item nav-link">Menu</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'booking' %}" class="dropdown-item">Booking</a>
+                                <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
+                                <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="{% url 'booking' %}" class="btn btn-primary py-2 px-4">Book A Table</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">{{item.name}} Food Details</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+
+                            <li class="breadcrumb-item text-white active" aria-current="page">Details</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+<!-- Navbar & Hero End -->
+
+<div class="container">
+        <!-- Product Image and Description -->
+        <div class="row">
+            <div class="col-md-6 product-image">
+                <img src="{{item.image.url}}" alt="Product Image">
+            </div>
+            <div class="col-md-6 product-description">
+                <h2>{{item.name}}</h2>
+                <p>Price: ${{item.price}}</p>
+                <p>{{item.description | safe}} </p>
+                <button class="btn btn-secondary" id="back-to-item">Back to Item</button>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="row reviews mt-5">
+                <h3 class="">Reviews</h3>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="col-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">John Doe</h5>
+                        <p class="card-text">Great product! Highly recommend.</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Jane Smith</h5>
+                        <p class="card-text">Good quality, but a bit expensive.</p>
+                    </div>
+                </div>
+                </div>
+                <!-- Add more reviews as needed -->
+
+                <!-- Review Form -->
+                <div class="col-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Leave a Review</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="review" class="form-label">Review</label>
+                                <textarea class="form-control" id="review" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="row related-products mt-5">
+            <div class="col-12">
+                <h3 class="my-3">Related Products</h3>
+                <div class="row">
+                {% for item in items %}
+                 <div class="col-md-3">
+                        <div class="card h-100">
+                            <img src="{{item.image.url}}" class="card-img-top h-75 " alt="Related Product 1">
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.name}}</h5>
+                                <p class="card-text">${{item.price}} </p>
+                                <a href="{% url 'detail' item.slug%}" class="btn btn-primary">View Product</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                   
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

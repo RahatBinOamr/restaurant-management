@@ -94,10 +94,12 @@ lunch-menu
                             {% for item in items %}
                             <div class="col-lg-6">
                                     <div class="d-flex align-items-center">
-                                        <img class="flex-shrink-0 img-fluid rounded" src="{{ item.image.url }}" alt="" style="width: 80px;">
+                                        <a href="{% url 'detail' item.slug %}">
+                                            <img class="flex-shrink-0 img-fluid rounded" src="{{ item.image.url }}" alt="" style="width: 80px;">
+                                        </a>
                                         <div class="w-100 d-flex flex-column text-start ps-4">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                                <span>{{item.name}}</span>
+                                                <a href="{% url 'detail' item.slug %}"><span>{{item.name}}</span></a>
                                                 <span class="text-primary">${{item.price}} </span>
                                             </h5>
                                             <small class="fst-italic">{{item.description | slice:50 |safe}}... </small>

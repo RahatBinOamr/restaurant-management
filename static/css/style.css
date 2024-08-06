@@ -477,3 +477,22 @@
     padding-right: 0;
     border-right: none;
 }
+
+
+
+
+
+
+
+
+
+.product-image img {
+    width: 550px;
+    height: auto;
+}
+.product-description {
+    margin-top: 20px;
+}
+.reviews, .related-products {
+    margin-top: 40px;
+}

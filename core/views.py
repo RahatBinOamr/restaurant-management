@@ -17,7 +17,7 @@ def home_page(request):
   items = Item.objects.all().order_by('?')[:14]
 
   context ={
-     'items': items
+    'items': items
   }
   return render(request, 'index.html',context)
 

@@ -30,3 +30,14 @@ def break_fist_item(request):
     'items':break_first
   }
   return render(request, 'break_fist.html', context)
+
+
+
+def item_detail(request,slug):
+  item = Item.objects.get(slug=slug)
+  related_item = Item.objects.filter(period=item.period).exclude(slug=item.slug)
+  context ={
+    'item':item,
+    'items':related_item
+  }
+  return render(request, 'item_detail.html', context)

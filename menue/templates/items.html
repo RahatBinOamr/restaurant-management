@@ -4,7 +4,7 @@
 menu
 {% endblock title %}
 {% block content %}
- <!-- Navbar & Hero Start -->
+<!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
                 <a href="{% url 'home' %}" class="navbar-brand p-0">
@@ -47,7 +47,7 @@ menu
                 </div>
             </div>
         </div>
-        <!-- Navbar & Hero End -->
+<!-- Navbar & Hero End -->
 
 
         <!-- Menu Start -->
@@ -94,10 +94,12 @@ menu
                             {% for item in items %}
                             <div class="col-lg-6">
                                     <div class="d-flex align-items-center">
-                                        <img class="flex-shrink-0 img-fluid rounded" src="{{ item.image.url }}" alt="" style="width: 80px;">
+                                        <a href="{% url 'detail' item.slug %}">
+                                            <img class="flex-shrink-0 img-fluid rounded" src="{{ item.image.url }}" alt="" style="width: 80px;">
+                                        </a>
                                         <div class="w-100 d-flex flex-column text-start ps-4">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                                <span>{{item.name}}</span>
+                                                <a href="{% url 'detail' item.slug %}"><span>{{item.name}}</span></a>
                                                 <span class="text-primary">${{item.price}} </span>
                                             </h5>
                                             <small class="fst-italic">{{item.description | slice:50 |safe}}... </small>
