@@ -116,3 +116,46 @@ const backItem = document.getElementById('back-to-item');
 backItem.addEventListener('click', () => {
   history.back();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  let offset = 4; // Initial offset (already shown 4 reviews)
+  const loadMoreButton = document.querySelector('.load-more-button');
+
+  loadMoreButton.addEventListener('click', function () {
+    const url = window.location.href;
+    fetch(`${url}?offset=${offset}`, {
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.length > 0) {
+          const reviewsContainer = document.querySelector('.reviews-container');
+          data.forEach(review => {
+            const reviewCard = `
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title">${review.name}</h5>
+                              <div class="show-rating">
+                                  ${'<label class="fa fa-star activate"></label>'.repeat(
+                                    review.rating
+                                  )}
+                              </div>
+                              <p class="card-text">${review.message}</p>
+                          </div>
+                      </div>
+                  `;
+            reviewsContainer.insertAdjacentHTML('beforeend', reviewCard);
+          });
+          offset += 4;
+        } else {
+          loadMoreButton.textContent = 'No more reviews available';
+          loadMoreButton.disabled = true;
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+});

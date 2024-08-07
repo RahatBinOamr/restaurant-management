@@ -6,5 +6,5 @@ urlpatterns =[
   path('break-first/', break_fist_item, name='break-first'),
   path('lunch/', lunch_item, name='lunch'),
   path('dinner/',dinner_item, name='dinner'),
-  path('<slug:slug>',item_detail,name='detail'),
+  path('<slug:slug>/',item_detail,name='detail'),
 ]

@@ -493,6 +493,30 @@
 .product-description {
     margin-top: 20px;
 }
+
+
+
 .reviews, .related-products {
     margin-top: 40px;
+}
+.star-rating {
+    display: flex;
+    direction: row-reverse;
+    justify-content: center;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label,
+.star-rating input:hover ~ label,
+.star-rating label:hover ~ label {
+    color: #ffc107;
+}
+.activate{
+    color: #ffc107;
 }
