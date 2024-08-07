@@ -63,7 +63,9 @@
                 <p>Price: ${{item.price}} (<b>{{item.average_rating}}<label class="fa fa-star activate"></label><b/>) </p>
                 <p>{{item.description | safe}} </p>
                 <button class="btn btn-secondary" id="back-to-item">Back to Item</button>
+                <a href="{% url 'cart_item' item.slug %}">
                 <button class="btn btn-primary">Add to Cart</button>
+                </a>
             </div>
         </div>
 

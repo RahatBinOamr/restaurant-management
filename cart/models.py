@@ -6,7 +6,9 @@ from django.db.models import Sum
 
 class CartItem(models.Model):
   item = models.ForeignKey(Item,on_delete=models.CASCADE)
-  quantity = models.IntegerField(default=1)
+  quantity = models.PositiveIntegerField(default=1)
+  session_key = models.CharField(max_length=200, blank=True, null=True)
+
 
   @property
   def item_price(self):
