@@ -71,7 +71,7 @@
         <div class=" reviews mt-5">
                 <h3 class="">Reviews</h3>
             <div class="row  mt-3">
-
+                {% if reviews %}
                 <div class="col-md-6">
                     <div class="reviews-container">
                         {% for review in reviews %}
@@ -90,6 +90,54 @@
                     </div>
                     <button class="btn btn-primary w-100 load-more-button">Load More</button>
                 </div>
+                {% else %}
+                <div class="col-md-6">
+                    <div class="reviews-container">
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"> Karen Adams </h5>
+                                <div class="show-rating">
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                </div>
+                                <p class="card-text"> Absolutely loved the atmosphere and the food! The service was top-notch, and the pasta was cooked to perfection. Will definitely be coming back! </p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"> John M </h5>
+                                <div class="show-rating">
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                </div>
+                                <p class="card-text"> A bit of a letdown. The steak was overcooked, and it took forever for the server to check in with us. Hoping it was just an off night. </p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"> Emily R </h5>
+                                <div class="show-rating">
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                    <label class="fa fa-star activate"></label>
+                                </div>
+                                <p class="card-text"> This place is a hidden gem! The sushi was fresh and flavorful, and the staff was super friendly. The ambiance made for a perfect date night </p>
+                            </div>
+                        </div>
+                        
+
+
+                    </div>
+                    <button class="btn btn-primary w-100 load-more-button">Load More</button>
+                </div>
+                {% endif %}
+                
                 
 
                 <!-- Review Form -->
@@ -140,16 +188,13 @@
                         <div class="card h-100">
                             <img src="{{item.image.url}}" class="card-img-top h-75 " alt="Related Product 1">
                             <div class="card-body">
-                                <h5 class="card-title">{{item.name}}</h5>
+                                <h5 class="card-title">{{item.name}}({{item.average_rating}}<label class="fa fa-star activate"></label>)</h5>
                                 <p class="card-text">${{item.price}} </p>
                                 <a href="{% url 'detail' item.slug%}" class="btn btn-primary">View Product</a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-                   
-                    
-                    
                 </div>
             </div>
         </div>

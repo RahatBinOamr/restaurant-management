@@ -34,12 +34,10 @@ def break_fist_item(request):
   return render(request, 'break_fist.html', context)
 
 
-
 def item_detail(request, slug):
     item = Item.objects.get(slug=slug)
     related_item = Item.objects.filter(period=item.period).exclude(slug=item.slug)
     show_reviews = Review.objects.filter(item=item)
-    
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -55,7 +53,6 @@ def item_detail(request, slug):
         reviews = show_reviews[offset:offset + limit]
         reviews_data = [{'name': review.name, 'rating': review.rating, 'message': review.message} for review in reviews]
         return JsonResponse(reviews_data, safe=False)
-    
     context = {
         'item': item,
         'items': related_item,

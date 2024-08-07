@@ -22,8 +22,8 @@ class Item(models.Model):
     return f"{self.name}"
   
   def average_rating(self):
-        average = int(self.review_set.aggregate(Avg('rating'))['rating__avg'])
-        return average if average is not None else 0 
+    average = self.review_set.aggregate(Avg('rating'))['rating__avg']
+    return int(average) if average is not None else 0
   
 
 
