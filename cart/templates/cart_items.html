@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load cart_count %}
+{% block title %}
+cart item
+{% endblock title %}
+{% block content %}
+
+<!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="{% url 'home' %}" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                        <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'service' %}" class="nav-item nav-link">Service</a>
+                        <a href="{% url 'items' %}" class="nav-item nav-link">Menu</a>
+                        <a href="{% url 'cart' %}" class="nav-item nav-link position-relative">
+                        Cart
+                        <span class="position-absolute  start-100 translate-middle badge rounded-pill bg-danger">
+                          {% cart_count request request.user %}
+                          
+                        </span>
+                        </a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'booking' %}" class="dropdown-item">Booking</a>
+                                <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
+                                <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="{% url 'booking' %}" class="btn btn-primary py-2 px-4">Book A Table</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Cart Item</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="{% url 'items' %}">Items</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Cart Item</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+  <!-- Navbar & Hero End -->
+  {% if cart_items %}
+  <div class="container my-5">
+    <h2 class="mb-4 text-center">Shopping Cart</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Cart Items</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Cart Item-->
+                    {% for item in cart_items  %}
+                    
+                    
+                      <div class="row mb-4">
+                          <div class="col-md-2 col-lg-2 col-xl-2">
+                              <img src="{{item.item.image.url}} " class="img-fluid rounded-3" alt="Product Image">
+                          </div>
+                          <div class="col-md-3 col-lg-3 col-xl-3">
+                              <h6 class="text-muted">{{item.item.name}} </h6>
+                              <h6 class="text-black mb-0">${{item.item.price}} </h6>
+                          </div>
+                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                              <button class="btn btn-link px-2">
+                                <a href="{% url 'decrement' item.pk %}">
+                                        <i class="fas fa-minus"></i>
+                                </a>
+                              </button>
+                              <input id="form1" min="0" name="quantity" value="{{item.quantity}}" type="number"
+                                    class="form-control form-control-sm" />
+                              <button class="btn btn-link px-2">
+                                <a href="{% url 'increment' item.pk %}">
+                                      <i class="fas fa-plus"></i>
+                                </a>
+                              </button>
+                          </div>
+                          <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                              <h6 class="mb-0">${{item.total_price}}</h6>
+                          </div>
+                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                              <a href="{% url 'delete' item.pk %}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                          </div>
+                      </div>
+
+                      <hr class="my-4" />
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Summary</h5>
+                </div>
+                
+                  <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Subtotal
+                              <span>${{ cart_data.total_items_price }}</span>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Shipping
+                              <span>${{ cart_data.shipping_cost }}</span>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Total (USD)
+                              <span>${{ cart_data.grand_total }}</span>
+                          </li>
+                      </ul>
+                      <button type="button" class="btn btn-primary btn-lg btn-block mt-4">Proceed to Checkout</button>
+                  </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+  {% else %}
+  <div class="container my-5">
+    <h4> you have no item in this cart</h4>
+    <a href="{% url 'items' %}">
+    <button class="btn btn-primary">
+    go to item 
+    </button>
+    </a>
+
+  </div>
+  {% endif %}
+
+{% endblock content %}

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Item,Review
 from django.contrib import messages
 # Create your views here.
@@ -35,7 +35,7 @@ def break_fist_item(request):
 
 
 def item_detail(request, slug):
-    item = Item.objects.get(slug=slug)
+    item = get_object_or_404(Item, slug=slug)
     related_item = Item.objects.filter(period=item.period).exclude(slug=item.slug)
     show_reviews = Review.objects.filter(item=item)
     if request.method == 'POST':
