@@ -40,3 +40,30 @@ def order_information(request):
           'cart_data':cart_data
         }
         return render(request,'order_info.html',context)
+  
+
+def update_order_info(request, pk):
+    contact = OrderContactInfo.objects.get(pk=pk)
+    session_key = request.session.session_key
+    if request.method == 'POST':
+        name = request.POST.get('u_name')
+        email = request.POST.get('u_email')
+        phone = request.POST.get('u_phone')
+        address = request.POST.get('u_address')
+        session_key = request.session.session_key
+
+        # Update the fields of the contact instance
+        contact.name = name
+        contact.email = email
+        contact.phone = phone
+        contact.address = address
+        contact.session_key = session_key
+
+        contact.save()
+        messages.success(request, 'Order contact information updated successfully')
+        return redirect('order_info')
+
+    context = {
+        'contact': contact,
+    }
+    return render(request, 'update_info.html', context)

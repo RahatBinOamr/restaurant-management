@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load cart_count %}
-
 {% block title %}
-order-information
+update-contact-info
 {% endblock title %}
-
 {% block content %}
 <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
@@ -45,76 +43,48 @@ order-information
 
             <div class="container-xxl py-5 bg-dark hero-header mb-5">
                 <div class="container text-center my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Item</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Update Contact Info</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="{% url 'cart' %}">cart</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Order Item</li>
+
+                            <li class="breadcrumb-item text-white active" aria-current="page">update contact form</li>
                         </ol>
                     </nav>
                 </div>
             </div>
         </div>
-
-
-  <div class="container my-5">
-    <div class="row">
-        <!-- Order Contact Info -->
-        <div class="col-md-6">
-            <div class="card shadow-lg mb-4">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>Order Contact Information</h4>
-                </div>
-                <div class="card-body">
-                    <p><strong>Full Name:</strong> {{order_contact_info.name}} </p>
-                    <p><strong>Email Address:</strong> {{order_contact_info.email}} </p>
-                    <p><strong>Phone Number:</strong> {{order_contact_info.phone}} </p>
-                    <p><strong>Shipping Address:</strong> {{order_contact_info.address}} </p>
-                </div>
-                <a href="{% url 'update_order_info' order_contact_info.pk %}">
-                <button type="button" class="btn btn-primary w-100 mt-3">Update Info</button>
-                </a>
-            </div>
-        </div>
-
-        <!-- Order Items and Summary -->
-        <div class="col-md-6">
+  <!-- Navbar & Hero End -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4>Order Items</h4>
+                    <h3>Update Contact Information</h3>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group mb-3">
-                        <!-- Product  -->
-                        {% for item in items %}
-                          <li class="list-group-item d-flex align-items-center">
-                              <img src="{{item.item.image.url}} " alt="Product Image" class="img-fluid rounded-3 w-25 me-3">
-                              <div class="flex-grow-1">
-                                  <h6 class="mb-1">{{item.item.name}} </h6>
-                                  <small>Quantity:{{item.quantity}} </small>
-                              </div>
-                              <span class="text-end">${{item.total_price}}</span>
-                          </li>
-                        {% endfor %}
-                        
-                    </ul>
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-1"><strong>Subtotal:</strong></p>
-                        <p class="mb-1">${{cart_data.total_items_price}} </p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-1"><strong>Shipping:</strong></p>
-                        <p class="mb-1">${{cart_data.shipping_cost}}</p>
-                    </div>
-                  
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-1"><strong>Total:</strong></p>
-                        <p class="mb-1">${{cart_data.grand_total}}</p>
-                    </div>
-                    <button type="button" class="btn btn-primary w-100 mt-3">Proceed to Payment</button>
+                    <form method='post'>
+                    {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" name="u_name" value="{{contact.name}}" class="form-control" id="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" name="u_email" value="{{contact.email}}" class="form-control" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" name="u_phone" value="{{contact.phone}}" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Shipping Address</label>
+                            <input class="form-control"  name="u_address" id="address" rows="3" value="{{contact.address}}" placeholder="Enter your shipping address" required></input>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Order Info</button>
+                    </form>
                 </div>
             </div>
-          </div>
+        </div>
     </div>
 </div>
 
