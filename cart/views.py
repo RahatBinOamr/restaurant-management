@@ -6,15 +6,12 @@ from django.shortcuts import render,get_object_or_404
 # Create your views here.
 
 def create_cart_item(request, slug):
-    # Get item or return 404 if not found
     item = get_object_or_404(Item, slug=slug)
     session_key = request.session.session_key
 
     if not session_key:
         request.session.create()
         session_key = request.session.session_key
-
-    # Find existing cart item
     existing_cart_item = CartItem.objects.filter(item=item, session_key=session_key).first()
 
     if existing_cart_item:
@@ -24,13 +21,11 @@ def create_cart_item(request, slug):
     else:
         CartItem.objects.create(item=item, session_key=session_key, quantity=1)
         messages.success(request, 'Item added to cart successfully')
-
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def view_cart_item(request):
     session_key = request.session.session_key
-    print(session_key, "session key: ")
     if session_key:
         cart_items = CartItem.objects.filter(session_key=session_key)
         cart_data = Cart.objects.filter(items__in=cart_items).distinct().first()
@@ -41,7 +36,6 @@ def view_cart_item(request):
             'cart_items': cart_items,
             'cart_data': cart_data
         }
-
         return render(request, 'cart_items.html', context)
     
 

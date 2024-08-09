@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from core.forms import SubscribeForm
 from .models import Contact,Reservation
@@ -38,6 +38,7 @@ def contact_page(request):
     message = request.POST.get('message')
     Contact.objects.create(name=name, email=email, subject=subject, message=message)
     messages.success(request, 'Your message send successfully!!!')
+    return redirect(request.path)
   return render(request, 'contact.html')
 
 def team_page(request):
@@ -87,6 +88,7 @@ def booking_page(request):
 
         # Add a success message
         messages.success(request, f"Your table booking was successfully made for {dateTime.strftime('%B %d, %Y at %I:%M %p')} for {people} person(s).")
+        return redirect(request.path)
         
     return render(request, 'booking.html')
 

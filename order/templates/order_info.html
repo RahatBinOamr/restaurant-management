@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load cart_count %}
+
+{% block title %}
+order-information
+{% endblock title %}
+
+{% block content %}
+<!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="{% url 'home' %}" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                        <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'service' %}" class="nav-item nav-link">Service</a>
+                        <a href="{% url 'items' %}" class="nav-item nav-link">Menu</a>
+                        <a href="{% url 'cart' %}" class="nav-item nav-link position-relative">
+                        Cart
+                        <span class="position-absolute  start-100 translate-middle badge rounded-pill bg-danger">
+                          {% cart_count request request.user %}
+                          
+                        </span>
+                        </a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'booking' %}" class="dropdown-item">Booking</a>
+                                <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
+                                <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="{% url 'booking' %}" class="btn btn-primary py-2 px-4">Book A Table</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Item</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="{% url 'cart' %}">cart</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Order Item</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+  <div class="container my-5">
+    <div class="row">
+        <!-- Order Contact Info -->
+        <div class="col-md-6">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Order Contact Information</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Full Name:</strong> {{order_contact_info.name}} </p>
+                    <p><strong>Email Address:</strong> {{order_contact_info.email}} </p>
+                    <p><strong>Phone Number:</strong> {{order_contact_info.phone}} </p>
+                    <p><strong>Shipping Address:</strong> {{order_contact_info.address}} </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items and Summary -->
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Order Items</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group mb-3">
+                        <!-- Product  -->
+                        {% for item in items %}
+                          <li class="list-group-item d-flex align-items-center">
+                              <img src="{{item.item.image.url}} " alt="Product Image" class="img-fluid rounded-3 w-25 me-3">
+                              <div class="flex-grow-1">
+                                  <h6 class="mb-1">{{item.item.name}} </h6>
+                                  <small>Quantity:{{item.quantity}} </small>
+                              </div>
+                              <span class="text-end">${{item.total_price}}</span>
+                          </li>
+                        {% endfor %}
+                        
+                    </ul>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-1"><strong>Subtotal:</strong></p>
+                        <p class="mb-1">${{cart_data.total_items_price}} </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-1"><strong>Shipping:</strong></p>
+                        <p class="mb-1">${{cart_data.shipping_cost}}</p>
+                    </div>
+                  
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-1"><strong>Total:</strong></p>
+                        <p class="mb-1">${{cart_data.grand_total}}</p>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100 mt-3">Proceed to Payment</button>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock content %}
