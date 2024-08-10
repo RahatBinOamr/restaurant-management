@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
-
+from django.http import HttpResponse
+from weasyprint import HTML
+from django.template.loader import render_to_string
 from cart.models import Cart, CartItem
 from .models  import Order, OrderContactInfo
 # Create your views here.
@@ -81,3 +83,15 @@ def user_orders(request):
 def order_summary(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'order_summary.html', {'order': order})
+
+
+def order_summary_pdf(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    html_string = render_to_string('order_summary_pdf.html', {'order': order})
+    
+    html = HTML(string=html_string)
+    pdf = html.write_pdf()
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="order_{order_id}.pdf"'
+    return response
