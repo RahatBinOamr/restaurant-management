@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load cart_count %}
+{% block title %}
+order summary
+{% endblock title %}
+
+{% block content %}
+<!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="{% url 'home' %}" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                        <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'service' %}" class="nav-item nav-link">Service</a>
+                        <a href="{% url 'items' %}" class="nav-item nav-link">Menu</a>
+                        <a href="{% url 'user_orders' %}" class="nav-item nav-link">Order</a>
+                        <a href="{% url 'cart' %}" class="nav-item nav-link position-relative">
+                        Cart
+                        <span class="position-absolute  start-100 translate-middle badge rounded-pill bg-danger">
+                          {% cart_count request request.user %}
+                          
+                        </span>
+                        </a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'booking' %}" class="dropdown-item">Booking</a>
+                                <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
+                                <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="{% url 'booking' %}" class="btn btn-primary py-2 px-4">Book A Table</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Summary</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                        
+                            <li class="breadcrumb-item text-white active" aria-current="page">Order summary</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+      <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Order Summary</h3>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Order Details</h5>
+                        <p><strong>Order ID:</strong> {{ order.id }}</p>
+                        <p><strong>Date:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+                        <p><strong>Status:</strong> <span class="badge bg-info">{{ order.status }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Contact Information</h5>
+                        <p><strong>Name:</strong> {{ order.contact_info.name }}</p>
+                        <p><strong>Email:</strong> {{ order.contact_info.email }}</p>
+                        <p><strong>Phone:</strong> {{ order.contact_info.phone }}</p>
+                        <p><strong>Address:</strong> {{ order.contact_info.address }}</p>
+                    </div>
+                </div>
+                
+                <h5 class="mb-4">Items</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.cart.items.all %}
+                        <tr>
+                            <td>{{ item.item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ item.item_price }}</td>
+                            <td>${{ item.total_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 offset-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Subtotal:</span>
+                                <strong>${{ order.cart.total_items_price }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Shipping:</span>
+                                <strong>${{ order.cart.shipping_cost }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <span>Total:</span>
+                                <strong>${{ order.cart.grand_total }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock content %}

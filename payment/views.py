@@ -96,7 +96,7 @@ def stripe_webhook(request):
             return HttpResponse(status=404)
 
         try:
-            cart = Cart.objects.get(items__session_key=session_key)
+            cart = Cart.objects.filter(items__session_key=session_key).order_by('-id').first()
         except Cart.DoesNotExist:
             print(f"No cart found for session key: {session_key}")
             return HttpResponse(status=404)

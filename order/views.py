@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 
 from cart.models import Cart, CartItem
-from .models  import OrderContactInfo
+from .models  import Order, OrderContactInfo
 # Create your views here.
 
 
@@ -69,3 +69,15 @@ def update_order_info(request, pk):
         'cart_items':cart_items
     }
     return render(request, 'update_info.html', context)
+
+
+def user_orders(request):
+    session_key = request.session.session_key
+    orders = Order.objects.filter(session_key=session_key).order_by('-created_at')
+
+    return render(request, 'user_orders.html', {'orders': orders})
+
+
+def order_summary(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'order_summary.html', {'order': order})
