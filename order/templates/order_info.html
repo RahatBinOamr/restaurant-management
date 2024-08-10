@@ -45,11 +45,11 @@ order-information
 
             <div class="container-xxl py-5 bg-dark hero-header mb-5">
                 <div class="container text-center my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Item</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Item and information</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
                             <li class="breadcrumb-item"><a href="{% url 'cart' %}">cart</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Order Item</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Order </li>
                         </ol>
                     </nav>
                 </div>
@@ -111,8 +111,12 @@ order-information
                         <p class="mb-1"><strong>Total:</strong></p>
                         <p class="mb-1">${{cart_data.grand_total}}</p>
                     </div>
-                    <button type="button" class="btn btn-primary w-100 mt-3">Proceed to Payment</button>
                 </div>
+                <form action="{% url  'create-checkout-session' cart_data.pk %}" method="POST">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Proceed to Payment</button>
+                </form>
+                    
             </div>
           </div>
     </div>

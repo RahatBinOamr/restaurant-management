@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'menue',
     'cart',
     'order',
+    'payment',
     'tinymce',
 ]
 
@@ -130,7 +131,12 @@ EMAIL_HOST_USER = "6e87d6002@smtp-brevo.com"
 EMAIL_HOST_PASSWORD = "j8Wadh0ZvX7CR9kx"
 
 
+# stripe keys
+STRIPE_PUBLISHABLE_KEY="pk_test_51M65eaKeDizp6MkJA8JrVdUB7WR5Q9XFCmS02iIFLSo1eVLkU18F6BchjUBZLBHrnpHkMvwJndDNlgmWXWBvQ3HT00dj4QeOsj"
+STRIPE_SECRET_KEY="sk_test_51M65eaKeDizp6MkJx5o063t7eyf8bKCzmitCyuO4hM3y4y2yK7ipbKc7TyOlmzbRFifcRy30Om0AnGNqebXPFTVH00JyjL2VK9"
+STRIPE_WEBHOOK_SECRET = "whsec_304c864560de801e3744e15a1ee028711cca5ec080b9b342cc808aae6e39f630"
 
+# tinymce 
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,

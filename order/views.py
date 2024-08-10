@@ -45,6 +45,7 @@ def order_information(request):
 def update_order_info(request, pk):
     contact = OrderContactInfo.objects.get(pk=pk)
     session_key = request.session.session_key
+    cart_items = CartItem.objects.filter(session_key=session_key)
     if request.method == 'POST':
         name = request.POST.get('u_name')
         email = request.POST.get('u_email')
@@ -65,5 +66,6 @@ def update_order_info(request, pk):
 
     context = {
         'contact': contact,
+        'cart_items':cart_items
     }
     return render(request, 'update_info.html', context)
